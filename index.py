@@ -1,11 +1,7 @@
-import subprocess
-print("📦 Installed packages:")
-print(subprocess.check_output(["pip", "list"]).decode())
-
-
 from flask import Flask, request, send_file
 import io
 from docx import Document
+import os
 
 # Import your redaction logic
 from redactor import create_analyzer
@@ -23,7 +19,7 @@ def redact_file():
         return {
             "message": "PII Redaction Tool API",
             "usage": "POST a .docx file to / with key 'file'",
-            "example": "curl -X POST -F 'file=@Input.docx' https://pii-redaction-tool.onrender.com/"
+            "example": "curl -X POST -F 'file=@Input.docx' https://your-vercel-url.vercel.app/"
         }
     
     # POST request - redact the file
@@ -68,5 +64,5 @@ def health_check():
         "version": "1.0.0"
     }
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+# Vercel requires this
+app.debug = False
